@@ -1,3 +1,5 @@
+mod decompiler;
+
 fn main() {
     let mut args: Vec<String> = std::env::args().collect();
 
@@ -7,6 +9,8 @@ fn main() {
 }
 
 fn parse(filename: String) {
-    let data = std::fs::read_to_string(filename).expect("Unable to read file");
-    println!("{}", data);
+    let data: String = std::fs::read_to_string(&filename).expect("Unable to read file");
+    let decompiled: String = decompiler::decompile(data);
+
+    std::fs::write(format!("{}.decompiled", filename), decompiled).expect("Unable to write file");
 }
