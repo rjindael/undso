@@ -1,5 +1,12 @@
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
+    let mut args: Vec<String> = std::env::args().collect();
 
-    dbg!(args);
+    for arg in args.iter_mut().skip(1) {
+        parse(arg.to_string());
+    }
+}
+
+fn parse(filename: String) {
+    let data = std::fs::read_to_string(filename).expect("Unable to read file");
+    println!("{}", data);
 }
